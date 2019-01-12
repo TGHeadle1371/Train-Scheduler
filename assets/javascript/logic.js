@@ -109,7 +109,12 @@ database.ref().on("child_added", function (childSnapshot) {
         );
         // Append the new row to the table
         $("#trains > tbody").append(newRow);
+
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 5000);
     },
+
     // Handle the errors
     // Run error function if it doesnt work
     function (errorObject) {
