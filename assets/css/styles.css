@@ -2,11 +2,22 @@
     box-sizing: border-box;
 }
 
+table {
+display: block;
+}
+tbody {
+    width: 100%;
+    text-align: center;
+}
+col {
+    padding: 5px;
+}
+
 #addUser {
     margin-top: 8px;
 }
 
 .jumbotron {
-    background-color:rgb(92, 24, 24);
+    background-color: rgb(92, 24, 24);
     color: #fff;
 }
