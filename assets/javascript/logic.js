@@ -23,6 +23,7 @@ var database = firebase.database();
 $("#addTrain").on("click", function (event) {
     event.preventDefault();
 
+
     // Grabbed values from text boxes
     var name = $("#name-input").val().trim();
     var dest = $("#destination-input").val().trim();
