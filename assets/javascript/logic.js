@@ -110,6 +110,11 @@ database.ref().on("child_added", function (childSnapshot) {
         // Append the new row to the table
         $("#trains > tbody").append(newRow);
 
+        // Create individual IDs for trains
+        var index = 0;
+        $("#trains > tbody > tr").each(function () {
+            $(this).attr("id", index++);
+        });
     },
 
     // Handle the errors
