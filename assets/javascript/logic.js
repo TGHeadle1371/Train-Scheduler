@@ -97,8 +97,8 @@ database.ref().on("child_added", function (childSnapshot) {
         console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
         // Next Train
-        var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+        var nextTrain = moment().add(tMinutesTillTrain).format("hh:mm A");
+        console.log("ARRIVAL TIME: " + nextTrain);
 
         // Create new row
         var newRow = $("<tr>").append(
@@ -106,10 +106,18 @@ database.ref().on("child_added", function (childSnapshot) {
             $("<td>").text(newDest),
             $("<td>").text(newFreq),
             $("<td>").text(nextTrain),
-            $("<td>").text(tMinutesTillTrain)
+            $("<td>").text(tMinutesTillTrain),
+            $("<button>").attr("id", "deletebutton").text("Remove")
         );
+
         // Append the new row to the table
         $("#trains > tbody").append(newRow);
+
+
+        // Trying to add Remove button
+        $("#deletebutton").on('click', function () {
+        });
+
 
         // Create individual IDs for trains
         var index = 0;
