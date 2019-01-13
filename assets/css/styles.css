@@ -1,13 +1,23 @@
-* {
-    box-sizing: border-box;
-}
 
 table {
-display: block;
-}
-tbody {
     width: 100%;
-    text-align: center;
+    border-collapse: collapse;
+}
+
+th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+}
+
+td,
+th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+.card-body {
+    overflow-x:auto;
 }
 col {
     padding: 5px;
@@ -20,4 +30,7 @@ col {
 .jumbotron {
     background-color: rgb(92, 24, 24);
     color: #fff;
+}
+div::-webkit-scrollbar {
+    display: none;
 }
