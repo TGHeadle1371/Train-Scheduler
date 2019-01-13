@@ -1,4 +1,3 @@
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -14,11 +13,22 @@ td,
 th {
     padding: 6px;
     border: 1px solid #ccc;
-    text-align: left;
+    text-align: center;
+    vertical-align: center;
 }
+
+#deletebutton {
+    border-radius: 5px;
+    align-content: center;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
 .card-body {
-    overflow-x:auto;
+    overflow-x: auto;
 }
+
 col {
     padding: 5px;
 }
@@ -31,6 +41,7 @@ col {
     background-color: rgb(92, 24, 24);
     color: #fff;
 }
+
 div::-webkit-scrollbar {
     display: none;
 }
