@@ -4,7 +4,7 @@
 // 2. Create button for adding new trains - then update the html + update the database
 // 3. Create a way to retrieve trains from the train database.
 // 4. Create a way to calculate the train time.
-// 5. Calculate frequency 
+// 5. Calculate minutes away 
 
 // Initialize Firebase
 var config = {
@@ -115,8 +115,7 @@ database.ref().on("child_added", function (childSnapshot) {
 
 
         // Trying to add Remove button
-        $("#deletebutton").on('click', function () {
-        });
+        $("#deletebutton").on('click', function () {});
 
 
         // Create individual IDs for trains
