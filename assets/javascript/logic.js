@@ -4,7 +4,7 @@
 // 2. Create button for adding new trains - then update the html + update the database
 // 3. Create a way to retrieve trains from the train database.
 // 4. Create a way to calculate the train time.
-// 5. Calculate minutes away 
+// 5. Calculate minutes away
 
 // Initialize Firebase
 var config = {
@@ -18,24 +18,36 @@ var config = {
 firebase.initializeApp(config);
 // Firebase Database
 var database = firebase.database();
+var getKey = "";
 
 // Add Employee Button
-$("#addTrain").on("click", function (event) {
+$("#addTrain").on("click", function(event) {
+    // prevent page reload
     event.preventDefault();
 
-
     // Grabbed values from text boxes
-    var name = $("#name-input").val().trim();
-    var dest = $("#destination-input").val().trim();
-    var startTime = moment($("#firstTrainTime-input").val().trim(), "HH:mm").format("X");
-    var freq = $("#frequency-input").val().trim();
+    var name = $("#name-input")
+        .val()
+        .trim();
+    var dest = $("#destination-input")
+        .val()
+        .trim();
+    var startTime = moment(
+        $("#firstTrainTime-input")
+            .val()
+            .trim(),
+        "HH:mm"
+    ).format("X");
+    var freq = $("#frequency-input")
+        .val()
+        .trim();
 
     // Local temporary object for data
     var newTrain = {
         name: name,
         dest: dest,
         startTime: startTime,
-        freq: freq,
+        freq: freq
     };
     // Push data to database
     database.ref().push(newTrain);
@@ -54,12 +66,14 @@ $("#addTrain").on("click", function (event) {
     $("#frequency-input").val("");
 });
 // Create event for adding Train to the database and a row in the html
-database.ref().on("child_added", function (childSnapshot) {
+database.ref().on(
+    "child_added",
+    function(snapshot) {
         // Store in variables
-        var newTrain = childSnapshot.val().name;
-        var newDest = childSnapshot.val().dest;
-        var newTime = childSnapshot.val().startTime;
-        var newFreq = childSnapshot.val().freq;
+        var newTrain = snapshot.val().name;
+        var newDest = snapshot.val().dest;
+        var newTime = snapshot.val().startTime;
+        var newFreq = snapshot.val().freq;
 
         // Employee Information
         console.log(newTrain);
@@ -77,7 +91,10 @@ database.ref().on("child_added", function (childSnapshot) {
         var firstTime = newTime;
 
         // First Time (pushed back 1 year to make sure it comes before current time)
-        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(
+            1,
+            "years"
+        );
         console.log(firstTimeConverted);
 
         // Current Time
@@ -97,36 +114,52 @@ database.ref().on("child_added", function (childSnapshot) {
         console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
         // Next Train
-        var nextTrain = moment().add(tMinutesTillTrain).format("hh:mm A");
+        var nextTrain = moment()
+            .add(tMinutesTillTrain, "minutes")
+            .format("HH:mm");
         console.log("ARRIVAL TIME: " + nextTrain);
 
         // Create new row
-        var newRow = $("<tr>").append(
+        var newRow = $("<tr id=" + "'" + snapshot.val() + "'" + ">").append(
             $("<td>").text(newTrain),
             $("<td>").text(newDest),
             $("<td>").text(newFreq),
             $("<td>").text(nextTrain),
             $("<td>").text(tMinutesTillTrain),
-            $("<button>").attr("id", "deletebutton").text("Remove")
+            "<td class='col-xs-1'>" +
+                "<input type='submit' value='Remove train' class='remove-train btn btn-secondary btn-sm'>" +
+                "</td>" +
+                "</tr>"
         );
+        newRow
+            .attr("data-snapKey", snapshot)
+            .attr("title", "Delete Saved Search");
 
         // Append the new row to the table
         $("#trains > tbody").append(newRow);
 
-
         // Trying to add Remove button
-        $("#deletebutton").on('click', function () {});
-
+        $(".remove-train").on("click", function() {
+            $(this)
+                .closest("tr")
+                .remove();
+            getKey = $(this)
+                .parent()
+                .parent()
+                .attr("id");
+            database.ref($(this).attr("data-snapKey")).remove();
+        });
 
         // Create individual IDs for trains
         var index = 0;
-        $("#trains > tbody > tr").each(function () {
+        $("#trains > tbody > tr").each(function() {
             $(this).attr("id", index++);
         });
     },
 
     // Handle the errors
     // Run error function if it doesnt work
-    function (errorObject) {
+    function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
-    });
+    }
+);
