@@ -1,4 +1,5 @@
 # Train-Scheduler
+## [Live](https://tgheadle1371.github.io/Train-Scheduler/)
 
 - Train schedule application that incorporates Firebase to host arrival and departure data. 
 - This app will retrieve and manipulate this information with Moment.js. 
@@ -14,6 +15,6 @@
 6. [Moment JS](https://momentjs.com/)
 7. [FireBase](https://firebase.google.com/)
 
-[Live](https://tgheadle1371.github.io/Train-Scheduler/)
+
 
  ![Image of Webpage](/assets/images/sitePage.png "Game Page")
